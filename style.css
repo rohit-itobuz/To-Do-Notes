@@ -1,0 +1,32 @@
+.input-text {
+    position: relative;
+}
+.add-button {
+    position: absolute;
+    right: 5vw;
+    
+    
+}
+
+.item-box {
+    width: 80%;
+    border-radius: 10rem;
+}
+@media (min-width: 768px){
+    .list-item {
+        position: relative;
+    }
+    .item-box {
+        width: 80%;
+        border-radius: 10rem;
+    }
+    .list-button {
+            position: absolute;
+            right: 14vw;
+            
+    }
+}
+
+@media (min-width: 1024px){
+    
+}
