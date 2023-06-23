@@ -1,30 +1,22 @@
-.input-text {
-    position: relative;
+.To-Do {
+    background-image: url(/todo-backgroung.avif);
+    background-size: cover;
+    background-repeat: no-repeat;
+   
 }
-.add-button {
-    position: absolute;
-    right: 5vw;
-    
-    
+.input-box {
+    border-radius: 5rem;
+}
+.todo-input:focus {
+    outline: none;
 }
 
 .item-box {
-    width: 80%;
     border-radius: 10rem;
 }
+
 @media (min-width: 768px){
-    .list-item {
-        position: relative;
-    }
-    .item-box {
-        width: 80%;
-        border-radius: 10rem;
-    }
-    .list-button {
-            position: absolute;
-            right: 14vw;
-            
-    }
+    
 }
 
 @media (min-width: 1024px){

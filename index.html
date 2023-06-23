@@ -14,47 +14,73 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap" rel="stylesheet" />
 </head>
 
-<body>
-    <h1 class="text-center mt-5">TO DO..</h1>
-    <div class="input-text container-fluid d-flex justify-content-center">
+<body class="To-Do">
+    <div>
+        <h1 class="text-center mt-5">TO DO..</h1>
+        <div class="input-box w-75 container-fluid d-flex gap-2 justify-content-center py-3 mt-3 px-md-5 bg-light ">
 
-        <input class=" w-100 p-3 align-items-center" type="text" id="write" placeholder="Enter your secret....">
-        <button onclick="addtask()" type="button"
-            class="add-button btn btn-dark rounded-circle align-items-center my-2">+</button>
-    </div>
-
-    <!-- <p class="px-md-5">Your Secret are here:-</p> -->
-    <!-- <p id="val"></p> -->
-    <section class="itemContainer d-flex flex-column gap-3 mt-3">
-        <!-- <div id="val" class="list-item container-fluid d-flex flex-column gap-1 flex-md-row justify-content-center">
-            <input class="item-box border py-3" type="text" id="first-text">
-
-            <div class="list-button align-self-center">
-                <button onclick="completed()" id="cut" class="btn border"><i class="fa-solid fa-check"></i></button>
-                <button onclick="deleted()" class="btn border"><i class="fa fa-trash"></i></button>
-
+            <input onkeydown="EnterButton(event)"
+                class="todo-input w-100 rounded-2 border-0 py-md-3 bg-light" type="text" id="input-text"
+                placeholder="Enter your secret....">
+            <div class="align-self-center">
+                <button onclick="addtask()" type="button" class="add-button btn btn-dark rounded-circle "
+                    id="myBtn">+</button>
             </div>
 
         </div>
-        <div id="val" class="list-item container-fluid d-flex flex-column gap-1 flex-md-row justify-content-center">
-            <input class="item-box border py-3" type="text" id="first-text">
+    </div>
 
-            <div class="list-button align-self-center">
-                <button onclick="completed()" id="cut" class="btn border"><i class="fa-solid fa-check"></i></button>
-                <button onclick="deleted()" class="btn border"><i class="fa fa-trash"></i></button>
 
+    <!-- <p class="px-md-5">Your Secret are here:-</p> -->
+    <!-- <p id="val"></p> -->
+    <section id="itemContainer" class="d-flex flex-column gap-3 mt-5 m-md-5">
+
+        <!-- <div id="val" class="item-box w-75 bg-light container-fluid d-flex gap-1 py-2 py-lg-3 flex-md-row justify-content-center">
+                <div class="container-fluid border border-0 bg-light  py-2 mx-md-2 py-lg-3" id="first-text"></div>
+                
+    
+                <div class="list-button align-self-center d-flex gap-1 gap-md-2">
+                    <button onclick="completed()" id="cut1" class="btn border bg-success"><i class="fa-solid fa-check"></i></button>
+                    <button onclick="deleted()" id="delete1" class="btn border bg-danger"><i class="fa fa-trash"></i></button>
+    
+                </div>
+    
             </div>
+            <div id="val" class="item-box w-75 bg-light container-fluid d-flex gap-1 py-2 py-lg-3 flex-md-row justify-content-center">
+                
+                <input class="container-fluid border border-0 bg-light  py-2 mx-md-2 py-lg-3" type="text" id="first-text">
+    
+                <div class="list-button align-self-center d-flex gap-1 gap-md-2">
+                    <button onclick="completed()" id="cut1" class="btn border bg-success"><i class="fa-solid fa-check"></i></button>
+                    <button onclick="deleted()" id="delete1" class="btn border bg-danger"><i class="fa fa-trash"></i></button>
+    
+                </div>
+    
+            </div> -->
 
-        </div> -->
 
     </section>
 
-    <div class="mt-5 d-flex flex-column flex-md-row gap-5 align-self-center justify-content-center">
-        <button>All</button>
-        <button>Active</button>
-        <button>Completed</button>
-        <button>Clear Completed</button>
+
+    <div class="select mt-5 d-flex flex-wrap justify-content-center gap-3 gap-md-4 gap-lg-5">
+        <select name="todos" class="filter-todo">
+            <option value="all" id="btn-all">All</option>
+            <option value="incomplete" id="btn-active">Active</option>
+            <option value="Completed" id="btn-completed">Completed</option>
+            <option value="clearCompleted" id="btn-clearall">Clear Completed</option>
+
+        </select>
     </div>
+
+    <!-- <div class="todo-information mt-5 d-flex flex-wrap justify-content-center gap-3 gap-md-4 gap-lg-5">
+        <button id="btn-all">All</button>
+        <button id="btn-active">Active</button>
+        <button id="btn-completed">Completed</button>
+        <button id="btn-clearall">Clear Completed</button>
+    </div> -->
+
+
+
 
 
     <script src="main.js"></script>
