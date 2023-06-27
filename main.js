@@ -1,91 +1,117 @@
-let inputText = document.getElementById("input-text");
-inputText = inputText.value;
-let arr = [];
-const todoButton = document.querySelector(".add-button");
-// const filterOption = document.querySelector(".filter-todo");
+const taskInput = document.querySelector(".input-text");
+const addInputTask = document.getElementById("add-task");
+
+filters = document.querySelectorAll(".filters span");
+clearAll = document.querySelector(".clear-btn");
+taskBox = document.querySelector(".task-box");
 
 
-// filterOption.addEventListener("change", filterTodo);
-todoButton.addEventListener("click", addTodo);
+filters.forEach(btn => {
+    btn.addEventListener("click", () => {
+        document.querySelector("span.active").classList.remove("active");
+        btn.classList.add("active");
+        showTodo(btn.id);
+    });
+});
 
-function EnterButton(event) {
-    if (event.key === "Enter") {
-        document.getElementById("myBtn").click();
+let editId,
+    isEditTask = false,
+    todos = JSON.parse(localStorage.getItem("todo-list"));
+
+
+let liTag = "";
+
+function showTodo(filter) {
+
+    liTag = "";
+    if (todos) {
+        todos.forEach((todo, id) => {
+            let completed = todo.status == "completed" ? "checked" : "";
+            if (filter == todo.status || filter == "all") {
+                liTag += `<li class="task">
+                            <label class="d-flex flex-row" for="${id}">
+                            
+                            <input onclick="updateStatus(this)" type="checkbox" id="${id}" ${completed}>
+                            <p class="${completed}">${todo.name}</p>
+                                
+                            </label>
+                            <div class="settings">
+                            <ul>
+                            <li onclick='deleteTask(${id}, "${filter}")' class="btn border bg-danger"><i class="fa fa-trash"></i></li>
+                            </ul>
+                        </div>   
+                           
+                        </li>`;
+            }
+        });
+    }
+    taskBox.innerHTML = liTag || `<span>You don't have any task here</span>`;
+    let checkTask = taskBox.querySelectorAll(".task");
+    !checkTask.length ? clearAll.classList.remove("active") : clearAll.classList.add("active");
+
+}
+showTodo("all");
+
+
+function updateStatus(selectedTask) {
+    let taskName = selectedTask.parentElement.lastElementChild;
+    if (selectedTask.checked) {
+        taskName.classList.add("checked");
+        todos[selectedTask.id].status = "completed";
+    } else {
+        taskName.classList.remove("checked");
+        todos[selectedTask.id].status = "pending";
     }
 }
 
-function addtask() {
 
-    arr.unshift(document.getElementById("input-text").value);
-    show();
+
+function deleteTask(deleteId, filter) {
+    todos.splice(deleteId, 1);
+    showTodo(filter);
 }
 
 
+clearAll.addEventListener("click", () => {
+    todos.splice(0, todos.length);
+    showTodo()
+});
 
-function show(){
+let userTask = taskInput.value.trim();
+let taskInfo = { name: userTask, status: "pending" };
 
-    document.getElementById("itemContainer").innerHTML = "";
-    
-    
-        for (let i = 0; i < arr.length; i++) {
-            document.getElementById("itemContainer").innerHTML += `<div id="val" class="item-box w-75 bg-light container-fluid d-flex gap-1 py-2 py-lg-3 flex-md-row justify-content-center">
-                
-        <input class="container-fluid border border-0 bg-light  py-2 mx-md-2 py-lg-3" type="text" id="first-text" value="${arr[i]}">
-
-        <div class="list-button align-self-center d-flex gap-1 gap-md-2">
-            <button onclick="completed('${i}')" id="cut1" class="btn border bg-success"><i class="fa-solid fa-check"></i></button>
-            <button onclick="deleted('${i}')" id="delete1" class="btn border bg-danger"><i class="fa fa-trash"></i></button>
-
-        </div>
-
-    </div>`
-}
-//for clear the input
-    document.getElementById("input-text").value = "";
-}
-function deleted(i){
-    arr.splice(i,1);
-    show()
-    // console.log(arr);
-}
-    
-
-    //empty space invalid
-
-
-    document.getElementById("cut1").addEventListener("click", completed);
-    function completed() {
-        document.getElementById("val").style.textDecoration = "line-through";
+addInputTask.addEventListener("click", () => {
+    let userTask = taskInput.value.trim();
+    if (userTask === taskInfo.name) {
+        alert("you entered same task");
     }
+    else {
+    todos = !todos ? [] : todos;
+    let taskInfo = { name: userTask, status: "pending" };
+    todos.push(taskInfo);
+    taskInput.value = "";
+    showTodo(document.querySelector("span.active").id);
+    }
+});
 
-    // document.querySelector("#input-text").value = "";
-    // let curr = document.querySelectorAll("#cut1");
-    // for(let i=0; i<curr.length; i++){
-    //     curr[i].onclick = function(){
-    //         this.parentNode.remove();
-    //     }
-    // }
+taskInput.addEventListener("keyup", e => {
+    let userTask = taskInput.value.trim();
+    if (e.key == "Enter" && userTask) {
+        if (userTask === taskInfo.name) {
+            alert("you entered same task");
+        }
+        else {
+            if (!isEditTask) {
+                todos = !todos ? [] : todos;
+                taskInfo = { name: userTask, status: "pending" };
+                todos.push(taskInfo);
+            } else {
+                isEditTask = false;
+                todos[editId].name = userTask;
+            }
+            taskInput.value = "";
+            showTodo(document.querySelector("span.active").id);
+        }
 
-    // for (let i = 0; i < arr.length; i++) {
-    //     document.getElementById("delete1").addEventListener("click", deleted);
-    // function deleted() {
-    //     document.getElementById("val").remove(arr.splice(i,1));
-    //     // alert("hello");
-    //  }
-    // }
-        
-
-
-    
-
-
-
-
-
-
-
-
-// for CLEAR COMPLETED
-// document.getElementById("delete1").addEventListener("click",deleted);
-// function deleted(){
-//     document.getElementById("itemContainer").remove();
+    }
+});
